@@ -3,6 +3,6 @@ require ('dotenv').config({path: './config/.env'})
 require("./config/db")
 const app = express()
 
-app.listen(process.env.PORT, () =>{
-    console.log(`Listen on port ${process.env.PORT}`);
+app.listen(3000, () =>{
+    console.log('Listen on port 3000');
 })
