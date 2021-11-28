@@ -109,17 +109,38 @@ const validateUsername = async username => {
   return user ? false : true;
 };
 
+// Passport middleware
+
+const userAuth = passport.authenticate("jwt", { session: false });
+
+// Verification du role
+const validateRole = roles => (req, res, next) =>
+ !roles.includes(req.user.role)
+   ? res.status(401).json("Non autorisé")
+   : next();
 
 const validateEmail = async email => {
  let user = await User.findOne({ email });
  return user ? false : true;
 };
 
+const serializeUser = user => {
+ return {
+   username: user.username,
+   email: user.email,
+   name: user.name,
+   _id: user._id,
+   updatedAt: user.updatedAt,
+   createdAt: user.createdAt
+ };
+};
 
 
 module.exports = {
 
   userLogin,
   userRegister,
-
+  userAuth,
+  validateRole,
+  serializeUser
 };

@@ -1,8 +1,12 @@
 const router = require('express').Router()
 
 const {
-       userLogin,
-     userRegister,    
+ 
+    userLogin,
+    userRegister,
+    userAuth,
+    validateRole,
+    serializeUser  
     } = require("../utils/authentification");
 
 //Enregistrement utilisateur
@@ -40,23 +44,28 @@ router.post('/login-superadmin', async (req, res) => {
     await userLogin(req.body, "superadmin", res);
 })
 
+//Route Profile
+router.get("/profile", userAuth, async (req, res) => {
+    return res.json(serializeUser(req.user));
+  });
+
 //protection utilisateur
-router.post('/profile-user', async (req, res) => {
-
-
+router.get('/profile-user', userAuth, validateRole(["suser"]), async (req, res) => {
+    
+    return res.json("Bonjour utlisateur");
 })
 
 
 //protection administrateur
-router.post('/profile-admin', async (req, res) => {
-
+router.get('/profile-admin', userAuth,validateRole(["admin"]) ,async (req, res) => {
+    return res.json("Bonjour Admin");
 
 })
 
 //protection super-administrateur
-router.post('/login-superadmin', async (req, res) => {
+router.get('/login-superadmin',userAuth, validateRole(["superadmin"]), async (req, res) => {
 
-
+    return res.json("Bonjour Super Admin");
 })
 
 
