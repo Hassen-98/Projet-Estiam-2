@@ -110,6 +110,13 @@ const validateUsername = async username => {
 };
 
 
+const validateEmail = async email => {
+ let user = await User.findOne({ email });
+ return user ? false : true;
+};
+
+
+
 module.exports = {
 
   userLogin,
