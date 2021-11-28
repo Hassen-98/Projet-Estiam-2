@@ -1,27 +1,37 @@
 const mongoose = require('mongoose')
+const { Schema, model } = require ("mongoose")
 const validator = require('email-validator')
 
 
 const userSchema = new mongoose.Schema ({
-    pseudo : {
+    name : {
         type: String,
         required: true,
-        minLength : 3,
-        maxLength: 55,
-     
     },
+
     email : {
         type: String,
         required : true,
        validate: [validator],
         lowercase: true,
     },
-    password : {
+
+    role : {
         type: String,
         require: true,
-        max: 1024,
+        default: "admin",
+        enum: ["user", "admin", "superadmin"]
+    },
 
-    }
+    username: {
+        type: String,
+        require: true,
+    },
+
+    password: {
+        type: String,
+        require: true,
+    },
 
 })
 
