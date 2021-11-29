@@ -1,6 +1,6 @@
 const exp = require("express")
 require ('dotenv').config({path: './config/.env'})
-require("./config/db")
+require("./config/constant")
 const { connect } = require('mongoose')
 const { success, error } = require('consola')
 const bp= require("body-parser")
@@ -9,7 +9,7 @@ const cors = require("cors")
 
 
 
-const { DB, PORT } = require('./config/db')
+const { DB, PORT } = require('./config/constant')
 
 const app = exp()
 

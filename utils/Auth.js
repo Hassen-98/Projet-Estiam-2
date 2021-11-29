@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 //const passport = require("passport");
 const User = require('../models/user.model')
-//const { SECRET } = require("../config");
+const { SECRET } = require("../config/constant");
 
 
 const userRegister = async (userDets, role, res) => {
@@ -45,11 +45,9 @@ const hashedPassword = await bcrypt.hash(userDets.password, 12);
     
   }
 
-
-
 }
 
-/*const userLogin = async (userCreds, role, res) => {
+const userLogin = async (userCreds, role, res) => {
   let { username, password} = userCreds;
 
   // Vérification du nom d'utilisateur dans la base de donnée
@@ -68,9 +66,42 @@ const hashedPassword = await bcrypt.hash(userDets.password, 12);
       success: false
   })
 }
-*/
+// L'utilisateur existe et essaye de se connecter
+//Verifie Mot de passe
 
+  let isMatch = await bcrypt.compare(password, user.password)
+  if(isMatch){
+    //connecte avec token
+    let token = jwt.sign({
+      user_id: user.user_id,
+      role: user.role, 
+      username: user.username,
+      email: user.email
+    },
+    SECRET,
+    { expiresIn: "7 days"})
 
+    let result = {
+      username: user.username,
+      role: user.role,
+      email: user.email,
+      token: `Bearer ${token}`,
+      expiresIn: 168
+    }
+    return res.status(200).json({
+      ...result,
+      message: "Vous etes maintenant connecté",
+      success: true
+  })
+
+  }else{
+    return res.status(403).json({
+      message: "Mot de passe incorrect.",
+      success: false
+  })
+
+  }
+}
 
 const validateUsername = async username => {
   let user = await User.findOne({ username });
@@ -84,7 +115,7 @@ const validateEmail = async email => {
 
  module.exports = {
 
-  //userLogin,
+  userLogin,
   userRegister,
  // userAuth,
  // validateRole,

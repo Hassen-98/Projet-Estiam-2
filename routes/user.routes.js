@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const { userRegister } = require('../utils/Auth')
+const { userRegister, userLogin } = require('../utils/Auth')
 
 
 //Enregistrement utilisateur
@@ -23,19 +23,19 @@ router.post('/register-super-admin', async (req, res) => {
 
 //connection utilisateur
 router.post('/login-user', async (req, res) => {
-   // await userLogin(req.body, "user", res);
+      await userLogin(req.body, "user", res);
 
 })
 
 //connection administrateur
 router.post('/login-admin', async (req, res) => {
-  //  await userLogin(req.body, "admin", res);
+    await userLogin(req.body, "admin", res);
 
 })
 
 //connection super-administrateur
 router.post('/login-super-admin', async (req, res) => {
-   // await userLogin(req.body, "superadmin", res);
+      await userLogin(req.body, "superadmin", res);
 })
 
 //Route Profile
