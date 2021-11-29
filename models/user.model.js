@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema, model } = require ("mongoose")
-const validator = require('email-validator')
+
 
 
 const userSchema = new mongoose.Schema ({
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema ({
     email : {
         type: String,
         required : true,
-       validate: [validator],
+  
         lowercase: true,
     },
 
