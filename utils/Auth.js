@@ -1,52 +1,118 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
-const User = require("../models/user.routes");
-const { SECRET } = require("../config");
+//const jwt = require("jsonwebtoken");
+//const passport = require("passport");
+const User = require('../models/user.model')
+//const { SECRET } = require("../config");
 
 
 const userRegister = async (userDets, role, res) => {
   try {
-    // validation de username
-    let usernameNotTaken = await validateUsername(userDets.username);
-    if (!usernameNotTaken) {
-      return res.status(400).json({
-        message: `Username déjà utilisée.`,
-        success: false
-      });
-    }
+     // validation de username
+  let usernameNotTaken = await validateUsername(userDets.username);
+  if (!usernameNotTaken) {
+    return res.status(400).json({
+      message: `Username déjà utilisée.`,
+      success: false
+    });
+  }
 
-    // validation de l'email
-    let emailNotRegistered = await validateEmail(userDets.email);
-    if (!emailNotRegistered) {
-      return res.status(400).json({
-        message: `email déjà utilisée.`,
-        success: false
-      });
-    }
+// validation de l'email
+let emailNotRegistered = await validateEmail(userDets.email);
+if (!emailNotRegistered) {
+  return res.status(400).json({
+    message: `email déjà utilisée.`,
+    success: false
+  });
+}
 
-    
-    const password = await bcrypt.hash(userDets.password, 12);
-    // creation de nouveau utilisateur
+const hashedPassword = await bcrypt.hash(userDets.password, 12);
+
     const newUser = new User({
       ...userDets,
-      password,
-      role
+      password: hashedPassword,
     });
-
     await newUser.save();
     return res.status(201).json({
       message: "vous êtes enregistré avec succès.",
       success: true
-    });
-  } catch (err) {
+    })
     
+  } catch (err) {
     return res.status(500).json({
       message: "Impossible de créer votre compte..",
       success: false
     });
+    
   }
+
+
+
+}
+
+/*const userLogin = async (userCreds, role, res) => {
+  let { username, password} = userCreds;
+
+  // Vérification du nom d'utilisateur dans la base de donnée
+  const user = await User.findOne({username})
+  if(!user){
+    return res.status(404).json({
+      message: "Le nom d'utilisateur n'est pas reconnue. Connexion invalide !",
+      success: false
+
+  })
+}
+// Vérification role
+  if(user.role != role){
+    return res.status(403).json({
+      message: "Vérifié bien votre logging dans le bon portail.",
+      success: false
+  })
+}
+*/
+
+
+
+const validateUsername = async username => {
+  let user = await User.findOne({ username });
+  return user ? false : true;
 };
+
+const validateEmail = async email => {
+  let user = await User.findOne({ email });
+  return user ? false : true;
+ };
+
+ module.exports = {
+
+  //userLogin,
+  userRegister,
+ // userAuth,
+ // validateRole,
+//  serializeUser
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+    
+    
+ 
+
+    
+  
+  /*
 
 // connexion de l'utilisateur (ADMIN, SUPER_ADMIN, USER)
 
@@ -102,29 +168,24 @@ const userLogin = async (userCreds, role, res) => {
       success: false
     });
   }
-};
+};*/
 
-const validateUsername = async username => {
-  let user = await User.findOne({ username });
-  return user ? false : true;
-};
+
 
 // Passport middleware
 
-const userAuth = passport.authenticate("jwt", { session: false });
+/*const userAuth = passport.authenticate("jwt", { session: false });
 
 // Verification du role
 const validateRole = roles => (req, res, next) =>
  !roles.includes(req.user.role)
    ? res.status(401).json("Non autorisé")
    : next();
+   */
 
-const validateEmail = async email => {
- let user = await User.findOne({ email });
- return user ? false : true;
-};
 
-const serializeUser = user => {
+
+/*const serializeUser = user => {
  return {
    username: user.username,
    email: user.email,
@@ -134,13 +195,5 @@ const serializeUser = user => {
    createdAt: user.createdAt
  };
 };
+*/
 
-
-module.exports = {
-
-  userLogin,
-  userRegister,
-  userAuth,
-  validateRole,
-  serializeUser
-};

@@ -12,30 +12,31 @@ const userRegister = async (userDets, role, res)=>{
         })
     }
 
-    let emailNotRegistered = await validateUsername(userDets.email)
+    let emailNotRegistered = await validateEmail(userDets.email)
         if(emailNotRegistered){
             return res.status(400).json({
-                message: "Email is  is already registered.",
+                message: "l'Email est déjà enregistré.",
                 success: false
             })
     }
 
-    const hashed = await bcrypt.hash(userDets.password, 12)
+    const password = await bcrypt.hash(userDets.password, 12)
 
     const newUser = new User ({
         ...userDets,
-        password: hashedPassword
+        password: password,
+        role
     })
 
     await newUser.save()
     return res.status(201).json({
-        message: "registre successfull !",
+        message: "Enregistrement réussi !",
         success: true
     })
         
     } catch (err) {
         return res.status(500).json({
-            message: "Unable to create your account",
+            message: "Impossible de créé votre compte",
             success: false
         })
         
@@ -44,7 +45,7 @@ const userRegister = async (userDets, role, res)=>{
 }
 
 const validateUsername = async username => {
-    let user = User.findOne({ username })
+    let user = await User.findOne({ username })
 
     if (user) {
         return false
@@ -55,7 +56,7 @@ const validateUsername = async username => {
 }
 
 const validateEmail = async email => {
-    let user = User.findOne({ email })
+    let user = await User.findOne({ email })
 
     if (user) {
         return false
@@ -63,4 +64,8 @@ const validateEmail = async email => {
         return true
     }
 
+}
+
+module.exports = {
+    userRegister
 }

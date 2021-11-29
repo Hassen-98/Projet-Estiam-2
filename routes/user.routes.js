@@ -1,13 +1,7 @@
 const router = require('express').Router()
 
-const {
- 
-    userLogin,
-    userRegister,
-    userAuth,
-    validateRole,
-    serializeUser  
-    } = require("../utils/authentification");
+const { userRegister } = require('../utils/Auth')
+
 
 //Enregistrement utilisateur
 router.post('/register-user', async (req, res) => {
@@ -22,51 +16,61 @@ router.post('/register-admin', async (req, res) => {
 })
 
 //Enregistrement super-administrateur
-router.post('/register-superadmin', async (req, res) => {
+router.post('/register-super-admin', async (req, res) => {
     await userRegister(req.body, "superadmin", res);
 
 })
 
 //connection utilisateur
 router.post('/login-user', async (req, res) => {
-    await userLogin(req.body, "user", res);
+   // await userLogin(req.body, "user", res);
 
 })
 
 //connection administrateur
 router.post('/login-admin', async (req, res) => {
-    await userLogin(req.body, "admin", res);
+  //  await userLogin(req.body, "admin", res);
 
 })
 
 //connection super-administrateur
-router.post('/login-superadmin', async (req, res) => {
-    await userLogin(req.body, "superadmin", res);
+router.post('/login-super-admin', async (req, res) => {
+   // await userLogin(req.body, "superadmin", res);
 })
 
 //Route Profile
-router.get("/profile", userAuth, async (req, res) => {
-    return res.json(serializeUser(req.user));
+router.get("/profile", async (req, res) => {
+   // return res.json(serializeUser(req.user));
   });
 
 //protection utilisateur
-router.get('/profile-user', userAuth, validateRole(["suser"]), async (req, res) => {
+router.post('/user-protected', async (req, res) => {
     
-    return res.json("Bonjour utlisateur");
+  //  return res.json("Bonjour utlisateur");
 })
 
 
 //protection administrateur
-router.get('/profile-admin', userAuth,validateRole(["admin"]) ,async (req, res) => {
-    return res.json("Bonjour Admin");
+router.post('/admin-protected',async (req, res) => {
+   // return res.json("Bonjour Admin");
 
 })
 
 //protection super-administrateur
-router.get('/login-superadmin',userAuth, validateRole(["superadmin"]), async (req, res) => {
+router.post('/super-admin-protected', async (req, res) => {
 
-    return res.json("Bonjour Super Admin");
+   // return res.json("Bonjour Super Admin");
 })
 
 
-module.exports = router
+module.exports = router;
+
+/*
+const {
+ 
+    userLogin,
+    userRegister,
+    userAuth,
+    validateRole,
+    serializeUser  
+    } = require("../utils/authentification");*/
