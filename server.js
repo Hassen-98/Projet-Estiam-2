@@ -37,10 +37,11 @@ const startApp = async () => {
         error({ 
             message: `Unable to connect with the Database \n${err}`, 
             badge: true})
-        
-        startApp()
-
-
         }
+
+        app.get("/", (req, res) => {
+            res.send("Hello Worl !");
+          });
+          
 }
 startApp()
