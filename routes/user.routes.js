@@ -22,12 +22,17 @@ router.post('/login-super-admin', async (req, res) => {
       await userLogin(req.body, "superadmin", res);
 })
 
-router.get("/", userController.getAllUsers);
+//GetAll()
+router.get("/all", userController.getAllUsers);
 
-//Route Profile
-router.get("/profile", async (req, res) => {
-   // return res.json(serializeUser(req.user));
-  });
+//GetbyId
+router.get("/:id", userController.userInfo);
+
+//Update
+router.put("/:id", userController.updateUser);
+
+//Delete
+router.delete("/:id", userController.deleteUser);
 
 //protection utilisateur
 router.post('/user-protected', async (req, res) => {
