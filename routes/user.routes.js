@@ -1,34 +1,18 @@
 const router = require('express').Router()
+const userController = require("../controllers/user.controller");
 
-const { userRegister, userLogin } = require('../utils/Auth')
+const { userRegister, userLogin } = require('../controllers/auth.controller')
 
-
-//Enregistrement utilisateur
-router.post('/register-user', async (req, res) => {
-    await userRegister(req.body, "user", res);
-
-})
 
 //Enregistrement administrateur
-router.post('/register-admin', async (req, res) => {
-    await userRegister(req.body, "admin", res);
+router.post('/signup', async (req, res) => {
+    await userRegister(req.body, "admin" | "superadmin", res);
 
 })
 
-//Enregistrement super-administrateur
-router.post('/register-super-admin', async (req, res) => {
-    await userRegister(req.body, "superadmin", res);
-
-})
-
-//connection utilisateur
-router.post('/login-user', async (req, res) => {
-      await userLogin(req.body, "user", res);
-
-})
 
 //connection administrateur
-router.post('/login-admin', async (req, res) => {
+router.post('/signin', async (req, res) => {
     await userLogin(req.body, "admin", res);
 
 })
@@ -37,6 +21,8 @@ router.post('/login-admin', async (req, res) => {
 router.post('/login-super-admin', async (req, res) => {
       await userLogin(req.body, "superadmin", res);
 })
+
+router.get("/", userController.getAllUsers);
 
 //Route Profile
 router.get("/profile", async (req, res) => {
