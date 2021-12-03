@@ -1,12 +1,17 @@
 const router = require('express').Router()
+const userController = require("../controllers/user.controller"); 
 
 const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('../utils/Auth')
 
+
+//CRUD USERS
+router.get("/all", userAuth, checkRole(["superadmin"]), userController.getAllUsers); 
 
 //Enregistrement admin et superadmin
 router.post('/signup/superadmin', async (req, res) => {
     await userRegister(req.body,"superadmin", res);
 })
+
 //Enregistrement admin et superadmin
 router.post('/signup/admin', async (req, res) => {
     await userRegister(req.body,"admin", res);
@@ -24,7 +29,7 @@ router.post('/signin/admin', async (req, res) => {
 
 
 //Route Profile
-router.get("/all", userAuth, async (req, res) => {
+router.get("/profile", userAuth, async (req, res) => {
     return res.json(serializeUser(req.user));
   });
 
@@ -40,10 +45,7 @@ router.get('/superadmin-protected', userAuth, checkRole(["superadmin"]), async (
    return res.json("Bonjour Super Admin");
 })
 
-module.exports.getAllUsers = async (req, res) => { 
-    const users = await UserSchema.find().select("-password"); 
-    res.status(200).json(users); 
-  };
+
 
 
 module.exports = router;
