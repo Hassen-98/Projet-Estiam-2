@@ -40,15 +40,10 @@ router.get('/superadmin-protected', userAuth, checkRole(["superadmin"]), async (
    return res.json("Bonjour Super Admin");
 })
 
+module.exports.getAllUsers = async (req, res) => { 
+    const users = await UserSchema.find().select("-password"); 
+    res.status(200).json(users); 
+  };
+
 
 module.exports = router;
-
-/*
-const {
- 
-    userLogin,
-    userRegister,
-    userAuth,
-    validateRole,
-    serializeUser  
-    } = require("../utils/authentification");*/
