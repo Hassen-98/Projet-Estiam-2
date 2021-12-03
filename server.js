@@ -17,7 +17,7 @@ app.use(passport.initialize())
 
 
 
-app.use("api/users", require("./routes/user.routes"))
+app.use("/api/users", require("./routes/user.routes"))
 
 app.listen(process.env.PORT, () =>{
     console.log(`Listen on port ${process.env.PORT}`);

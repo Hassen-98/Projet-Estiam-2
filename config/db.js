@@ -4,7 +4,7 @@ require("dotenv").config()
 
 const database = async () =>{
 await mongoose
-    .connect('mongodb+srv://' + process.env.DB_USER_PASS + '@projet-estiam.vg9ue.mongodb.net/project-estiam',
+    .connect('mongodb://localhost:27017/ESTIAM-Projet', { useNewUrlParser: true },
     )
     .then(() => console.log('connected to MongoDb'))
     .catch((err) => console.log('Failed to connect to MongoDB', err))
