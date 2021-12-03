@@ -6,6 +6,7 @@ const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('
 
 //CRUD USERS
 router.get("/all", userAuth, checkRole(["superadmin"]), userController.getAllUsers); 
+router.get("/:id", userController.userInfo); 
 
 //Enregistrement admin et superadmin
 router.post('/signup/superadmin', async (req, res) => {
