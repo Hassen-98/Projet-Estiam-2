@@ -18,6 +18,7 @@ app.use(bp.json())
 
 
 app.use('/api/users', require('./routes/user.routes'))
+app.use('/api/programs', require('./routes/program.route'))
 
 const startApp = async () => {
     try{
