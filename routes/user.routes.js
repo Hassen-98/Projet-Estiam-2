@@ -1,65 +1,43 @@
 const router = require('express').Router()
 
-const { userRegister } = require('../utils/Auth')
+const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('../utils/Auth')
 
 
-//Enregistrement utilisateur
-router.post('/register-user', async (req, res) => {
-    await userRegister(req.body, "user", res);
-
+//Enregistrement admin et superadmin
+router.post('/signup/superadmin', async (req, res) => {
+    await userRegister(req.body,"superadmin", res);
 })
-
-//Enregistrement administrateur
-router.post('/register-admin', async (req, res) => {
-    await userRegister(req.body, "admin", res);
-
-})
-
-//Enregistrement super-administrateur
-router.post('/register-super-admin', async (req, res) => {
-    await userRegister(req.body, "superadmin", res);
-
-})
-
-//connection utilisateur
-router.post('/login-user', async (req, res) => {
-   // await userLogin(req.body, "user", res);
-
+//Enregistrement admin et superadmin
+router.post('/signup/admin', async (req, res) => {
+    await userRegister(req.body,"admin", res);
 })
 
 //connection administrateur
-router.post('/login-admin', async (req, res) => {
-  //  await userLogin(req.body, "admin", res);
-
+router.post('/signin/superadmin', async (req, res) => {
+   await userLogin(req.body,"superadmin", res);
 })
 
-//connection super-administrateur
-router.post('/login-super-admin', async (req, res) => {
-   // await userLogin(req.body, "superadmin", res);
-})
+router.post('/signin/admin', async (req, res) => {
+    await userLogin(req.body, "admin", res);
+ })
+ 
+
 
 //Route Profile
-router.get("/profile", async (req, res) => {
-   // return res.json(serializeUser(req.user));
+router.get("/all", userAuth, async (req, res) => {
+    return res.json(serializeUser(req.user));
   });
-
-//protection utilisateur
-router.post('/user-protected', async (req, res) => {
-    
-  //  return res.json("Bonjour utlisateur");
-})
 
 
 //protection administrateur
-router.post('/admin-protected',async (req, res) => {
-   // return res.json("Bonjour Admin");
-
+router.get('/admin-protected', userAuth, checkRole(["admin"]),async (req, res) => {
+    return res.json("Bonjour Admin");
 })
 
 //protection super-administrateur
-router.post('/super-admin-protected', async (req, res) => {
+router.get('/superadmin-protected', userAuth, checkRole(["superadmin"]), async (req, res) => {
 
-   // return res.json("Bonjour Super Admin");
+   return res.json("Bonjour Super Admin");
 })
 
 

@@ -1,8 +1,9 @@
 const bcrypt = require("bcryptjs");
-//const jwt = require("jsonwebtoken");
-//const passport = require("passport");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 const User = require('../models/user.model')
-//const { SECRET } = require("../config");
+
+const { SECRET } = require("../config/constant");
 
 
 const userRegister = async (userDets, role, res) => {
@@ -25,11 +26,12 @@ if (!emailNotRegistered) {
   });
 }
 
-const hashedPassword = await bcrypt.hash(userDets.password, 12);
+const password = await bcrypt.hash(userDets.password, 12);
 
     const newUser = new User({
       ...userDets,
-      password: hashedPassword,
+      password,
+     role
     });
     await newUser.save();
     return res.status(201).json({
@@ -49,7 +51,7 @@ const hashedPassword = await bcrypt.hash(userDets.password, 12);
 
 }
 
-/*const userLogin = async (userCreds, role, res) => {
+const userLogin = async (userCreds, role, res) => {
   let { username, password} = userCreds;
 
   // Vérification du nom d'utilisateur dans la base de donnée
@@ -62,13 +64,46 @@ const hashedPassword = await bcrypt.hash(userDets.password, 12);
   })
 }
 // Vérification role
-  if(user.role != role){
+  if(user.role !== role){
     return res.status(403).json({
       message: "Vérifié bien votre logging dans le bon portail.",
       success: false
   })
+  }
+  let isMatch = await bcrypt.compare(password, user.password);
+  if (isMatch) {
+    //connexion avec token
+    let token = jwt.sign(
+      {
+        user_id: user._id,
+        role: user.role,
+        username: user.username,
+        email: user.email
+      },
+      SECRET,
+      { expiresIn: "7 days" }
+    );
+
+    let result = {
+      username: user.username,
+      role: user.role,
+      email: user.email,
+      token: `Bearer ${token}`,
+      expiresIn: 50
+    };
+
+    return res.status(200).json({
+      ...result,
+      message: "Vous êtes connecté.",
+      success: true
+    });
+  } else {
+    return res.status(403).json({
+      message: "Mot de passe Incorrect.",
+      success: false
+    });
+  }
 }
-*/
 
 
 
@@ -77,18 +112,42 @@ const validateUsername = async username => {
   return user ? false : true;
 };
 
+//Passport middleware
+
+const userAuth = passport.authenticate("jwt", { session: false });
+
+// Verification du role
+const checkRole = roles => (req, res, next) =>
+  !roles.includes(req.user.role)
+    ? res.status(401).json("Unauthorized")
+    : next();
+  
+
+
+
 const validateEmail = async email => {
   let user = await User.findOne({ email });
   return user ? false : true;
  };
 
+const serializeUser = user => {
+  return {
+    username: user.username,
+    email: user.email,
+    name: user.name,
+    _id: user._id,
+    updatedAt: user.updatedAt,
+    createdAt: user.createdAt
+  }
+};
+
  module.exports = {
 
-  //userLogin,
+  userLogin,
   userRegister,
- // userAuth,
- // validateRole,
-//  serializeUser
+  userAuth,
+  serializeUser,
+  checkRole
 };
 
 
@@ -172,16 +231,7 @@ const userLogin = async (userCreds, role, res) => {
 
 
 
-// Passport middleware
-
-/*const userAuth = passport.authenticate("jwt", { session: false });
-
-// Verification du role
-const validateRole = roles => (req, res, next) =>
- !roles.includes(req.user.role)
-   ? res.status(401).json("Non autorisé")
-   : next();
-   */
+// 
 
 
 
