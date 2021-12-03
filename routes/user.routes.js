@@ -9,12 +9,12 @@ router.get("/all", userAuth, checkRole(["superadmin"]), userController.getAllUse
 router.get("/:id", userController.userInfo); 
 
 //Enregistrement admin et superadmin
-router.post('/signup/superadmin', async (req, res) => {
+router.post('/signup/superadmin', userAuth, checkRole(["superadmin"]), async (req, res) => {
     await userRegister(req.body,"superadmin", res);
 })
 
 //Enregistrement admin et superadmin
-router.post('/signup/admin', async (req, res) => {
+router.post('/signup/admin', userAuth, checkRole(["superadmin"]),async (req, res) => {
     await userRegister(req.body,"admin", res);
 })
 
