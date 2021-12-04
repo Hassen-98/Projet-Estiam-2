@@ -1,19 +1,22 @@
-const express = require("express")
+const exp = require("express")
 require ('dotenv').config({path: './config/.env'})
-require("./config/db")
-const app = express()
-const body_parser= require("body-parser")
+require("./config/constant")
+const { connect } = require('mongoose')
+const { success, error } = require('consola')
+const bp= require("body-parser")
 const cors = require("cors")
 const passport = require("passport")
 
-require("./middlewares/passport")(passport)
 
+const { DB, PORT } = require('./config/constant')
 
+const app = exp()
 
-app.use(cors())
-app.use(body_parser.json())
+app.use(cors());
+app.use(bp.json())
 app.use(passport.initialize())
 
+<<<<<<< HEAD
 
 
 
@@ -22,3 +25,34 @@ app.use("/api/users", require("./routes/user.routes"))
 app.listen(process.env.PORT, () =>{
     console.log(`Listen on port ${process.env.PORT}`);
 })
+=======
+require('./middlewares/passport')(passport)
+
+
+app.use('/api/users', require('./routes/user.routes'))
+app.use('/api/programs', require('./routes/program.route'))
+
+const startApp = async () => {
+    try{
+    await connect(DB, {})
+    success({
+         message: `Successfully connected with the Database \n${DB}`,
+         badge: true
+        })
+
+    app.listen(PORT, () =>
+         success({ message: `Server started on PORT ${PORT}`, badge: true})
+         )
+    } catch(err) { 
+        error({ 
+            message: `Unable to connect with the Database \n${err}`, 
+            badge: true})
+        }
+
+        app.get("/", (req, res) => {
+            res.send("Hello Worl !");
+          });
+          
+}
+startApp()
+>>>>>>> user-register
