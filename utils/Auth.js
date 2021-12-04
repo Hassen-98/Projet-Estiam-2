@@ -1,14 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
-<<<<<<< HEAD:utils/authentification.js
-const User = require("../models/user.model");
-const { SECRET } = require("../config/db");
-=======
 const User = require('../models/user.model')
 
 const { SECRET } = require("../config/constant");
->>>>>>> user-register:utils/Auth.js
 
 
 const userRegister = async (userDets, role, res) => {
@@ -154,101 +149,3 @@ const serializeUser = user => {
   serializeUser,
   checkRole
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
-
-    
-    
- 
-
-    
-  
-  /*
-
-// connexion de l'utilisateur (ADMIN, SUPER_ADMIN, USER)
-
-const userLogin = async (userCreds, role, res) => {
-  let { username, password } = userCreds;
-  // verification de username dans la base de donnée 
-  const user = await User.findOne({ username });
-  if (!user) {
-    return res.status(404).json({
-      message: "Username inexistant",
-      success: false
-    });
-  }
-  // verification de role
-  if (user.role !== role) {
-    return res.status(403).json({
-      message: "s'il vous plait connectez vous à partir du bon portail.",
-      success: false
-    });
-  }
-  
-  // verification de mot de passe
-  let isMatch = await bcrypt.compare(password, user.password);
-  if (isMatch) {
-    //connexion avec token
-    let token = jwt.sign(
-      {
-        user_id: user._id,
-        role: user.role,
-        username: user.username,
-        email: user.email
-      },
-      SECRET,
-      { expiresIn: "7 days" }
-    );
-
-    let result = {
-      username: user.username,
-      role: user.role,
-      email: user.email,
-      token: `Bearer ${token}`,
-      expiresIn: 50
-    };
-
-    return res.status(200).json({
-      ...result,
-      message: "Vous êtes connecté.",
-      success: true
-    });
-  } else {
-    return res.status(403).json({
-      message: "Mot de passe Incorrect.",
-      success: false
-    });
-  }
-};*/
-
-
-
-// 
-
-
-
-/*const serializeUser = user => {
- return {
-   username: user.username,
-   email: user.email,
-   name: user.name,
-   _id: user._id,
-   updatedAt: user.updatedAt,
-   createdAt: user.createdAt
- };
-};
-*/
-

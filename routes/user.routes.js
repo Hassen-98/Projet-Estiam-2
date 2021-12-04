@@ -8,7 +8,7 @@ const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('
 router.get("/all",  userController.getAllUsers); 
 router.get("/:id", userController.getByIdUser); 
 router.patch("/:id", userAuth, checkRole(["superadmin"]),userController.updateUser); 
-router.delete("/:id", checkRole(["superadmin"]), userController.deleteUser);
+router.delete("/:id", userAuth, checkRole(["superadmin"]), userController.deleteUser);
 
 //Enregistrement admin et superadmin
 router.post('/signup/superadmin', userAuth, checkRole(["superadmin"]), async (req, res) => {

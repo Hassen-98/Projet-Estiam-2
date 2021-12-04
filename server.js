@@ -16,16 +16,6 @@ app.use(cors());
 app.use(bp.json())
 app.use(passport.initialize())
 
-<<<<<<< HEAD
-
-
-
-app.use("/api/users", require("./routes/user.routes"))
-
-app.listen(process.env.PORT, () =>{
-    console.log(`Listen on port ${process.env.PORT}`);
-})
-=======
 require('./middlewares/passport')(passport)
 
 
@@ -55,4 +45,3 @@ const startApp = async () => {
           
 }
 startApp()
->>>>>>> user-register

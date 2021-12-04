@@ -1,11 +1,6 @@
 const User = require("../models/user.model");
-<<<<<<< HEAD
-const { SECRET } = require("../config/db");
-=======
 const { SECRET } = require("../config/constant");
->>>>>>> user-register
 const { Strategy, ExtractJwt } = require("passport-jwt");
-const db = require("../config/db");
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -28,6 +23,8 @@ module.exports = passport => {
     })
   );
 };
+
+
 
 
 

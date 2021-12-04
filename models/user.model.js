@@ -1,8 +1,4 @@
 const { Schema, model } = require ("mongoose")
-<<<<<<< HEAD
-
-=======
->>>>>>> user-register
 
 
 const UserSchema = new Schema (
@@ -10,17 +6,12 @@ const UserSchema = new Schema (
     email : {
         type: String,
         required : true,
-<<<<<<< HEAD
-  
-        lowercase: true,
-=======
->>>>>>> user-register
     },
 
     role : {
         type: String,
         default: "admin",
-        enum: ["admin", "superadmin"]
+        enum: ["user", "admin", "superadmin"]
     },
 
     username: {
@@ -37,4 +28,3 @@ const UserSchema = new Schema (
 )
 
 module.exports = model('users', UserSchema)
-

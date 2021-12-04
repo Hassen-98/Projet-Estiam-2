@@ -12,7 +12,7 @@ module.exports.createProgram = async (req, res) => {
   } catch (err) {
      res.status(409).json({ message: err.message})
   }
-}   
+}  
 
 module.exports.getAllProgram = async (req, res) => {
     const programs = await ProgramSchema.find().select();
@@ -20,24 +20,19 @@ module.exports.getAllProgram = async (req, res) => {
   };
 
 
-  module.exports.getByIdProgram = (req, res) => { 
-    const id = req.params.id;
-
-  ProgramSchema.findById(id)
-    .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Not found Tutorial with id " + id });
-      else res.send(data);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving Tutorial with id=" + id });
-    });
+module.exports.userInfo = (req, res) => {
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
+  
+  ProgramSchema.findById(req.params.id, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("ID unknown : " + err);
+  }).select();
 };
-/*
 
-module.exports.updateUser = async (req, res) => {
+
+
+  module.exports.updateUser = async (req, res) => {
     if (!ObjectID.isValid(req.params.id))
       return res.status(400).send("ID unknown : " + req.params.id);
   
@@ -72,4 +67,3 @@ module.exports.deleteUser = async (req, res) => {
       return res.status(500).json({ message: err });
     }
   };
-*/
