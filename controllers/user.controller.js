@@ -6,7 +6,7 @@ module.exports.getAllUsers = async (req, res) => {
     res.status(200).json(users); 
   };
 
-module.exports.userInfo = (req, res) => { 
+module.exports.getByIdUser = (req, res) => { 
     if (!ObjectID.isValid(req.params.id)) 
       return res.status(400).send("ID unknown : " + req.params.id); 
    
@@ -33,7 +33,16 @@ module.exports.updateUser =  async (req, res) => {
   if (!user) return res.status(404).send('The product with the given ID was not found.');
 
   res.send(user)
+}
 
+module.exports.deleteUser =  async (req, res) => {
+  const {id} = req.params
+  if (!ObjectID.isValid(req.params.id)) 
+      return res.status(400).send("ID unknown : " + req.params.id);
 
-    
+  const user = await UserSchema.findByIdAndRemove(id)
+
+  if (!user) return res.status(404).send('The product with the given ID was not found.');
+
+  res.json({ message: "l'utilisateur a été supprimé"})
 }

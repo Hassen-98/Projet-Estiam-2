@@ -5,10 +5,10 @@ const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('
 
 
 //CRUD USERS
-router.get("/all", userAuth, checkRole(["superadmin"]), userController.getAllUsers); 
-router.get("/:id", userController.userInfo); 
-router.patch("/:id", userController.updateUser); 
-
+router.get("/all",  userController.getAllUsers); 
+router.get("/:id", userController.getByIdUser); 
+router.patch("/:id", userAuth, checkRole(["superadmin"]),userController.updateUser); 
+router.delete("/:id", checkRole(["superadmin"]), userController.deleteUser);
 
 //Enregistrement admin et superadmin
 router.post('/signup/superadmin', userAuth, checkRole(["superadmin"]), async (req, res) => {
@@ -32,7 +32,7 @@ router.post('/signin/admin', async (req, res) => {
 
 
 //Route Profile
-router.get("/profile", userAuth, async (req, res) => {
+router.get("/profil", userAuth, async (req, res) => {
     return res.json(serializeUser(req.user));
   });
 
@@ -47,8 +47,5 @@ router.get('/superadmin-protected', userAuth, checkRole(["superadmin"]), async (
 
    return res.json("Votre profil est : Admin");
 })
-
-
-
 
 module.exports = router;
