@@ -1,40 +1,31 @@
-const mongoose = require('mongoose')
 const { Schema, model } = require ("mongoose")
-const validator = require('email-validator')
 
 
-const userSchema = new mongoose.Schema ({
-    name : {
-        type: String,
-        required: true,
-    },
-
+const UserSchema = new Schema (
+{
     email : {
         type: String,
         required : true,
-       validate: [validator],
-        lowercase: true,
     },
 
     role : {
         type: String,
-        require: true,
         default: "admin",
-        enum: ["user", "admin", "superadmin"]
+        enum: ["admin", "superadmin"]
     },
 
     username: {
         type: String,
-        require: true,
+        required: true,
     },
 
     password: {
         type: String,
-        require: true,
+        required: true,
     },
+},
+    { timestamps: true}
+)
 
-})
+module.exports = model('users', UserSchema)
 
-const UserModel = mongoose.model('user', userSchema)
-
-module.exports = UserModel;
