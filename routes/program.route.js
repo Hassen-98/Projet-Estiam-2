@@ -9,7 +9,7 @@ router.post("/", userAuth, checkRole(["superadmin"]), ProgramController.createPr
 router.get("/all", ProgramController.getAllProgram);
 router.get("/:id", ProgramController.getByIdProgram);
 router.patch("/:id", userAuth, checkRole(["superadmin"]),ProgramController.updateProgram);
-router.delete("/:id", ProgramController.deleteProgram);
+router.delete("/:id", userAuth, checkRole(["superadmin"]),ProgramController.deleteProgram);
 
 
 module.exports = router;

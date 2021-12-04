@@ -32,25 +32,25 @@ module.exports.getByIdProgram = (req, res) => {
 
 
 
-  module.exports.updateProgram = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id)) 
-    return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
+module.exports.updateProgram = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) 
+  return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
 
-const program = await ProgramSchema.findByIdAndUpdate(req.params.id, 
-  { 
-   title: req.body.title,
-   theme: req.body.theme,
-   annee: req.body.annee,
-   description: req.body.password,
-   image: req.body.image,
-  
- }, 
- {new: true}
-);
+  const program = await ProgramSchema.findByIdAndUpdate(req.params.id, 
+    { 
+      title: req.body.title,
+      theme: req.body.theme,
+      annee: req.body.annee,
+      description: req.body.password,
+      image: req.body.image,
+      
+    }, 
+    {new: true}
+    );
 
-if (!program) return res.status(404).send('ID incorrect.');
+  if (!program) return res.status(404).send('ID incorrect.');
 
-res.send(program)
+  res.send(program)
 }
 
 
