@@ -8,7 +8,7 @@ module.exports.getAllUsers = async (req, res) => {
 
 module.exports.getByIdUser = (req, res) => { 
     if (!ObjectID.isValid(req.params.id)) 
-      return res.status(400).send("ID unknown : " + req.params.id); 
+      return res.status(400).send("L'Id n'est pas reconnue : " + req.params.id); 
    
     UserSchema.findById(req.params.id, (err, docs) => { 
       if (!err) res.send(docs); 
@@ -30,7 +30,7 @@ module.exports.updateUser =  async (req, res) => {
    {new: true}
   );
 
-  if (!user) return res.status(404).send('The product with the given ID was not found.');
+  if (!user) return res.status(404).send('L\'ID de l\'utilisateur n\'est pas reconnue.');
 
   res.send(user)
 }
@@ -42,7 +42,7 @@ module.exports.deleteUser =  async (req, res) => {
 
   const user = await UserSchema.findByIdAndRemove(id)
 
-  if (!user) return res.status(404).send('The product with the given ID was not found.');
+  if (!user) return res.status(404).send('L\'ID de l\'utilisateur n\'est pas reconnue.');
 
   res.json({ message: "l'utilisateur a été supprimé"})
 }
