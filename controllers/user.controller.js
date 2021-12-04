@@ -16,25 +16,24 @@ module.exports.userInfo = (req, res) => {
     }).select("-password"); 
 }; 
 
-/*module.exports.updateUser = ('/:id', async (req, res, next) => {
+module.exports.updateUser =  async (req, res) => {
   if (!ObjectID.isValid(req.params.id)) 
-  return res.status(400).send("ID unknown : " + req.params.id); 
-    next();
+      return res.status(400).send("ID unknown : " + req.params.id);
 
   const user = await UserSchema.findByIdAndUpdate(req.params.id, 
     { 
      username: req.body.username,
      email: req.body.email,
      password: req.body.password,
-     role: req.body.role,
+    
    }, 
+   {new: true}
   );
 
   if (!user) return res.status(404).send('The product with the given ID was not found.');
-   res.save(user)
+
   res.send(user)
 
 
-  
-})
-*/
+    
+}
