@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const UserSchema = require("../models/user.model");
 const userController = require("../controllers/user.controller"); 
 
 const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('../utils/Auth')
@@ -7,6 +8,8 @@ const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('
 //CRUD USERS
 router.get("/all", userAuth, checkRole(["superadmin"]), userController.getAllUsers); 
 router.get("/:id", userController.userInfo); 
+//router.patch("/:id", userController.updateUser); 
+
 
 //Enregistrement admin et superadmin
 router.post('/signup/superadmin', userAuth, checkRole(["superadmin"]), async (req, res) => {

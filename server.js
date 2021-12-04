@@ -8,7 +8,6 @@ const cors = require("cors")
 const passport = require("passport")
 
 
-
 const { DB, PORT } = require('./config/constant')
 
 const app = exp()

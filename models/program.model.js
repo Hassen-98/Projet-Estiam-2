@@ -3,6 +3,11 @@ const { Schema, model } = require ("mongoose")
 
 const ProgramSchema = new Schema (
 {
+    title : {
+        type: String,
+        required: true,
+    },
+
     theme : {
         type: String,
         required: true,
@@ -15,6 +20,7 @@ const ProgramSchema = new Schema (
 
     image : {
         type: String,
+        default: "./upload/profil/program.png"
     },
     description : {
         type: String,
