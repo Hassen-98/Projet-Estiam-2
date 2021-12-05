@@ -13,3 +13,9 @@ module.exports.createCampus = async (req, res) => {
      res.status(409).json({ message: err.message})
   }
 }  
+
+
+module.exports.getAllcampus = async (req, res) => {
+    const campus = await CampusSchema.find().select();
+    res.status(200).json(campus);
+  };
