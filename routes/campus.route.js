@@ -7,4 +7,5 @@ router.post("/", CampusController.createCampus);
 router.get("/all", CampusController.getAllcampus);
 router.get("/:id", CampusController.getByIdCampus);
 router.patch("/:id", CampusController.updateCampus);
+router.delete("/:id",CampusController.deleteCampus);
 module.exports = router;

@@ -52,3 +52,15 @@ module.exports.getAllcampus = async (req, res) => {
   
     res.send(Campus)
   }
+
+  module.exports.deleteCampus = async (req, res) => {
+    const {id} = req.params
+    if (!ObjectID.isValid(req.params.id)) 
+        return res.status(400).send("l'Id n'est pas reconnue : " + req.params.id);
+  
+    const Campus = await CampusSchema.findByIdAndRemove(id)
+  
+    if (!Campus) return res.status(404).send('L\'ID du Campusme n\'est pas reconnue.');
+  
+    res.json({ message: "le Campus a été supprimé"})
+  }
