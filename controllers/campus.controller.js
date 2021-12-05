@@ -25,11 +25,11 @@ module.exports.getAllcampus = async (req, res) => {
 
   module.exports.getByIdCampus = (req, res) => {
     if (!ObjectID.isValid(req.params.id))
-      return res.status(400).send("ID unknown : " + req.params.id);
+      return res.status(400).send("ID inconnue : " + req.params.id);
     
     CampusSchema.findById(req.params.id, (err, docs) => {
       if (!err) res.send(docs);
-      else console.log("ID unknown : " + err);
+      else console.log("ID inconnue : " + err);
     }).select();
   };
   
@@ -61,7 +61,7 @@ module.exports.getAllcampus = async (req, res) => {
   
     const Campus = await CampusSchema.findByIdAndRemove(id)
   
-    if (!Campus) return res.status(404).send('L\'ID du Campusme n\'est pas reconnue.');
+    if (!Campus) return res.status(404).send('L\'ID du Campus n\'est pas reconnue.');
   
     res.json({ message: "le Campus a été supprimé"})
   }

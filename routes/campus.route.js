@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const CampusController = require("../controllers/campus.controller");
 
-const { userAuth, checkRole} = require('../utils/Auth')
+const { userAuth, checkRole} = require('../controllers/auth.controller')
 
 router.post("/", userAuth, checkRole(["superadmin","admin"]),CampusController.createCampus);
 router.get("/all", CampusController.getAllcampus);

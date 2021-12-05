@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const FinanceController = require("../controllers/finance.controller");
 
-const { userAuth, checkRole} = require('../utils/Auth')
+const { userAuth, checkRole} = require('../controllers/auth.controller')
 
 //CRUD Program
 router.post("/", userAuth, checkRole(["superadmin","admin"]),FinanceController.createFinance);

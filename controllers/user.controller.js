@@ -18,13 +18,14 @@ module.exports.getByIdUser = (req, res) => {
 
 module.exports.updateUser =  async (req, res) => {
   if (!ObjectID.isValid(req.params.id)) 
-      return res.status(400).send("ID unknown : " + req.params.id);
+      return res.status(400).send("ID inconnue : " + req.params.id);
 
   const user = await UserSchema.findByIdAndUpdate(req.params.id, 
     { 
      username: req.body.username,
      email: req.body.email,
      password: req.body.password,
+     
     
    }, 
    {new: true}
@@ -38,7 +39,7 @@ module.exports.updateUser =  async (req, res) => {
 module.exports.deleteUser =  async (req, res) => {
   const {id} = req.params
   if (!ObjectID.isValid(req.params.id)) 
-      return res.status(400).send("ID unknown : " + req.params.id);
+      return res.status(400).send("ID inconnue : " + req.params.id);
 
   const user = await UserSchema.findByIdAndRemove(id)
 
