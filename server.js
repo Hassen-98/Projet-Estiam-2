@@ -22,7 +22,10 @@ require('./middlewares/passport')(passport)
 app.use('/api/users', require('./routes/user.routes'))
 app.use('/api/programs', require('./routes/program.route'))
 app.use('/api/campus', require('./routes/campus.route'))
+app.use('/api/certification', require('./routes/certification.route'))
 app.use('/api/entreprises', require('./routes/entreprise.route'))
+app.use('/api/finances', require('./routes/finance.routes'))
+app.use('/api/competence', require('./routes/competence.route'))
 
 const startApp = async () => {
     try{
