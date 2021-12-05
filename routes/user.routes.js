@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const userController = require("../controllers/user.controller"); 
 
-const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('../utils/Auth')
+const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('../controllers/auth.controller')
 
 
 //CRUD USERS
@@ -29,23 +29,5 @@ router.post('/signin/admin', async (req, res) => {
     await userLogin(req.body, "admin", res);
  })
  
-
-
-//Route Profile
-router.get("/profil", userAuth, async (req, res) => {
-    return res.json(serializeUser(req.user));
-  });
-
-
-//protection administrateur
-router.get('/admin-protected', userAuth, checkRole(["admin"]),async (req, res) => {
-    return res.json("Votre profil est : Admin");
-})
-
-//protection super-administrateur
-router.get('/superadmin-protected', userAuth, checkRole(["superadmin"]), async (req, res) => {
-
-   return res.json("Votre profil est : Admin");
-})
 
 module.exports = router;

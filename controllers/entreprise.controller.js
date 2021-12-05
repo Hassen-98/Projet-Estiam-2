@@ -34,7 +34,7 @@ module.exports.updateEntrprise = async (req, res) => {
     if (!ObjectID.isValid(req.params.id)) 
     return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
   
-    const  campus = await EntrepriseSchema.findByIdAndUpdate(req.params.id, 
+    const  entreprise = await EntrepriseSchema.findByIdAndUpdate(req.params.id, 
       { 
         name: req.body.name,
         logo : req.body.logo,
@@ -43,9 +43,9 @@ module.exports.updateEntrprise = async (req, res) => {
       {new: true}
       );
   
-    if (!campus) return res.status(404).send('ID incorrect.');
+    if (!entreprise) return res.status(404).send('ID incorrect.');
   
-    res.send(campus)
+    res.send(entreprise)
 }
 
 module.exports.deleteEntreprise = async (req, res) => {

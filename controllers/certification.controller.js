@@ -22,11 +22,11 @@ module.exports.getAllcertif = async (req, res) => {
 
   module.exports.getByIdcertif = (req, res) => {
     if (!ObjectID.isValid(req.params.id))
-      return res.status(400).send("ID unknown : " + req.params.id);
+      return res.status(400).send("ID inconnue : " + req.params.id);
     
     CertifSchema.findById(req.params.id, (err, docs) => {
       if (!err) res.send(docs);
-      else console.log("ID unknown : " + err);
+      else console.log("ID inconnue : " + err);
     }).select();
   };
 
