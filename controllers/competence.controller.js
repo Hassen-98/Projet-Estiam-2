@@ -13,3 +13,22 @@ module.exports.createComp = async (req, res) => {
      res.status(409).json({ message: err.message})
   }
 } 
+
+
+
+
+module.exports.getAllCom = async (req, res) => {
+  const competences = await CompSchema.find().select();
+  res.status(200).json(competences);
+};
+
+
+module.exports.getByIdComp = (req, res) => {
+if (!ObjectID.isValid(req.params.id))
+  return res.status(400).send("ID inconnue : " + req.params.id);
+
+CompSchema.findById(req.params.id, (err, docs) => {
+  if (!err) res.send(docs);
+  else console.log("ID inconnue : " + err);
+}).select();
+};

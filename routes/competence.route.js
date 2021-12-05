@@ -5,6 +5,8 @@ const CompetenceController = require("../controllers/competence.controller");
 
 //CRUD Program
 router.post("/", CompetenceController.createComp);
+router.get("/all", CompetenceController.getAllCom);
+router.get("/:id", CompetenceController.getByIdComp);
 
 
 module.exports = router;
