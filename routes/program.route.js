@@ -5,11 +5,11 @@ const ProgramController = require("../controllers/program.controller");
 const { userAuth, checkRole} = require('../utils/Auth')
 
 //CRUD Program
-router.post("/", userAuth, checkRole(["superadmin"]), ProgramController.createProgram);
+router.post("/", userAuth, checkRole(["superadmin","admin"]), ProgramController.createProgram);
 router.get("/all", ProgramController.getAllProgram);
 router.get("/:id", ProgramController.getByIdProgram);
-router.patch("/:id", userAuth, checkRole(["superadmin"]),ProgramController.updateProgram);
-router.delete("/:id", userAuth, checkRole(["superadmin"]),ProgramController.deleteProgram);
+router.patch("/:id", userAuth, checkRole(["superadmin","admin"]),ProgramController.updateProgram);
+router.delete("/:id", userAuth, checkRole(["superadmin","admin"]),ProgramController.deleteProgram);
 
 
 module.exports = router;

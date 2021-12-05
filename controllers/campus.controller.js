@@ -43,6 +43,7 @@ module.exports.getAllcampus = async (req, res) => {
         name: req.body.name,        
         description: req.body.description,
         image: req.body.image,
+        ville: req.body.ville,
         
       }, 
       {new: true}
