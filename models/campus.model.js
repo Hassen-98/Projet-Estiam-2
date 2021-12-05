@@ -16,8 +16,12 @@ const CampusSchema = new Schema (
         type: String,
         require: true
     },
-
+    ville : {
+        type: String,
+        require: true
+    },
 },
+
     { timestamps: true}
 )
 
