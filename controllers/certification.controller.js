@@ -52,3 +52,15 @@ module.exports.getAllcertif = async (req, res) => {
     res.send(certif)
   }
   
+
+  module.exports.deleteCertif = async (req, res) => {
+    const {id} = req.params
+    if (!ObjectID.isValid(req.params.id)) 
+        return res.status(400).send("l'Id n'est pas reconnue : " + req.params.id);
+  
+    const certif = await CertifSchema.findByIdAndRemove(id)
+  
+    if (!certif) return res.status(404).send('L\'ID du certification n\'est pas reconnue.');
+  
+    res.json({ message: "le certification a été supprimé"})
+  }
