@@ -41,7 +41,7 @@ module.exports.updateProgram = async (req, res) => {
       title: req.body.title,
       theme: req.body.theme,
       annee: req.body.annee,
-      description: req.body.password,
+      description: req.body.description,
       image: req.body.image,
       
     }, 

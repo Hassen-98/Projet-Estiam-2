@@ -33,3 +33,22 @@ module.exports.getAllcampus = async (req, res) => {
     }).select();
   };
   
+
+  module.exports.updateCampus = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) 
+    return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
+  
+    const Campus = await CampusSchema.findByIdAndUpdate(req.params.id, 
+      { 
+        name: req.body.name,        
+        description: req.body.description,
+        image: req.body.image,
+        
+      }, 
+      {new: true}
+      );
+  
+    if (!Campus) return res.status(404).send('ID incorrect.');
+  
+    res.send(Campus)
+  }
