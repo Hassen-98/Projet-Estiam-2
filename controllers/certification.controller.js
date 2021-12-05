@@ -29,3 +29,26 @@ module.exports.getAllcertif = async (req, res) => {
       else console.log("ID unknown : " + err);
     }).select();
   };
+
+
+  module.exports.updatecertif = async (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) 
+    return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
+  
+    const certif = await CertifSchema.findByIdAndUpdate(req.params.id, 
+      { 
+        title: req.body.title,  
+        section : req.body.section,
+        
+        
+     
+        
+      }, 
+      {new: true}
+      );
+  
+    if (!certif) return res.status(404).send('ID incorrect.');
+  
+    res.send(certif)
+  }
+  
