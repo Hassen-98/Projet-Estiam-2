@@ -11,7 +11,7 @@ router.patch("/:id", userAuth, checkRole(["superadmin"]),userController.updateUs
 router.delete("/:id", userAuth, checkRole(["superadmin"]), userController.deleteUser);
 
 //Enregistrement admin et superadmin
-router.post('/signup/superadmin', userAuth, checkRole(["superadmin"]), async (req, res) => {
+router.post('/signup/superadmin', async (req, res) => {
     await userRegister(req.body,"superadmin", res);
 })
 
