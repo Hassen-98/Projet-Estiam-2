@@ -51,3 +51,17 @@ module.exports.updateComp = async (req, res) => {
 
   res.send(comp)
 }
+
+
+
+module.exports.deleteComp = async (req, res) => {
+  const {id} = req.params
+  if (!ObjectID.isValid(req.params.id)) 
+      return res.status(400).send("l'Id n'est pas reconnue : " + req.params.id);
+
+  const competence = await CompSchema.findByIdAndRemove(id)
+
+  if (!competence) return res.status(404).send('L\'ID du competence n\'est pas reconnue.');
+
+  res.json({ message: "l'Id de l'competence a été supprimé"})
+}
