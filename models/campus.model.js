@@ -1,7 +1,7 @@
 const { Schema, model } = require ("mongoose")
 
 
-const CampuSchema = new Schema (
+const CampusSchema = new Schema (
 {
     name : {
         type: String,
@@ -21,4 +21,4 @@ const CampuSchema = new Schema (
     { timestamps: true}
 )
 
-module.exports = model('campus', CampuSchema)
+module.exports = model('campus', CampusSchema)

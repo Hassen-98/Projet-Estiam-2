@@ -21,6 +21,7 @@ require('./middlewares/passport')(passport)
 
 app.use('/api/users', require('./routes/user.routes'))
 app.use('/api/programs', require('./routes/program.route'))
+app.use('/api/campus', require('./routes/campus.route'))
 
 const startApp = async () => {
     try{
