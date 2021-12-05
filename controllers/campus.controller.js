@@ -19,3 +19,17 @@ module.exports.getAllcampus = async (req, res) => {
     const campus = await CampusSchema.find().select();
     res.status(200).json(campus);
   };
+
+
+
+
+  module.exports.getByIdCampus = (req, res) => {
+    if (!ObjectID.isValid(req.params.id))
+      return res.status(400).send("ID unknown : " + req.params.id);
+    
+    CampusSchema.findById(req.params.id, (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("ID unknown : " + err);
+    }).select();
+  };
+  
