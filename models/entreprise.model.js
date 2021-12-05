@@ -1,7 +1,7 @@
 const { Schema, model } = require ("mongoose")
 
 
-const ProgramSchema = new Schema (
+const EntrepriseSchema = new Schema (
 {
     name : {
         type: String,
@@ -9,22 +9,13 @@ const ProgramSchema = new Schema (
     },
 
 
-    annee : {
-        type: String,
-        required : true,
-    },
-
     logo : {
         type: String,
         default: "./upload/logo.png"
-    },
-    description : {
-        type: String,
-        require: true
     },
 
 },
     { timestamps: true}
 )
 
-module.exports = model('programs', ProgramSchema)
+module.exports = model('entreprise', EntrepriseSchema)
