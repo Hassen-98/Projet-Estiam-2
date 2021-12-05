@@ -36,7 +36,7 @@ const FinanceSchema = new Schema (
         },
         infos : {
             type: String,
-            
+            require: true
         },
     }],
     annee : {

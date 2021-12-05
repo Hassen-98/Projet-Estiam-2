@@ -29,3 +29,36 @@ module.exports.getByIdFinance = (req, res) => {
     else console.log("ID inconnue : " + err);
   }).select();
 };
+
+module.exports.updateFinance = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) 
+  return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
+
+  const  finance = await FinanceSchema.findByIdAndUpdate(req.params.id, 
+    { 
+      title: req.body.title,
+      autofinance : req.body.autofinance,
+      logoBank : req.body.logoBank,
+      description : req.body.description,
+      financement : req.body.financement,
+      
+    }, 
+    {new: true}
+    );
+
+  if (!finance) return res.status(404).send('ID incorrect.');
+
+  res.send(finance)
+}
+
+module.exports.deleteFinance = async (req, res) => {
+  const {id} = req.params
+  if (!ObjectID.isValid(req.params.id)) 
+      return res.status(400).send("l'Id n'est pas reconnue : " + req.params.id);
+
+  const finance = await FinanceSchema.findByIdAndRemove(id)
+
+  if (!finance) return res.status(404).send('L\'ID du finance n\'est pas reconnue.');
+
+  res.json({ message: "l'Id du finance a été supprimé"})
+}
