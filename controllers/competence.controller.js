@@ -32,3 +32,22 @@ CompSchema.findById(req.params.id, (err, docs) => {
   else console.log("ID inconnue : " + err);
 }).select();
 };
+
+
+module.exports.updateComp = async (req, res) => {
+  if (!ObjectID.isValid(req.params.id)) 
+  return res.status(400).send("ID n'est pas reconnue : " + req.params.id);
+
+  const  comp = await CompSchema.findByIdAndUpdate(req.params.id, 
+    { 
+      title: req.body.title,
+      module: req.body.module,
+      
+    }, 
+    {new: true}
+    );
+
+  if (!comp) return res.status(404).send('ID incorrect.');
+
+  res.send(comp)
+}
