@@ -7,7 +7,7 @@ const { userRegister, userLogin, userAuth, serializeUser, checkRole} = require('
 //CRUD USERS
 router.get("/all",  userController.getAllUsers); 
 router.get("/:id", userController.getByIdUser); 
-router.patch("/:id", userAuth, checkRole(["superadmin"]["superadmin"]),userController.updateUser); 
+router.patch("/:id", userAuth, checkRole(["superadmin","admin"]),userController.updateUser); 
 router.delete("/:id", userAuth, checkRole(["superadmin"]), userController.deleteUser);
 
 //Enregistrement admin et superadmin
