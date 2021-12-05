@@ -8,7 +8,6 @@ const EntrepriseSchema = new Schema (
         required: true,
     },
 
-
     logo : {
         type: String,
         default: "./upload/logo.png"
